@@ -3,6 +3,9 @@ using Business.Dtos.Requests.AuthRequests;
 using Business.Dtos.Responses.AuthResponses;
 using Business.Rules.FluentValidation;
 using Business.Rules.ValidationRules.FluentValidation.UserValidators;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -18,6 +21,10 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("Users.Get")]
     [ValidateModel(typeof(RegisterAuthRequestValidator))]
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterAuthRequest registerAuthRequest)

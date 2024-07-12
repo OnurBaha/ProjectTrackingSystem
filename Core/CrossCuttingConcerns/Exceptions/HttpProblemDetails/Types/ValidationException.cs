@@ -1,10 +1,10 @@
-﻿namespace Core.CrossCuttingConcerns.Exceptions.Types;
+﻿namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 
 public class ValidationException : Exception
 {
     public IEnumerable<ValidationExceptionModel> Errors { get; }
 
-    public ValidationException()
+    public ValidationException(List<FluentValidation.Results.ValidationFailure> errors)
         : base()
     {
         Errors = Array.Empty<ValidationExceptionModel>();

@@ -1,11 +1,11 @@
-﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+﻿using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ValidationException = Core.CrossCuttingConcerns.Exceptions.Types.ValidationException;
+using ValidationException = Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types.ValidationException;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
 public class ValidateModelAttribute : ActionFilterAttribute

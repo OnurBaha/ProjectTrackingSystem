@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.CrossCuttingConcerns.Exceptions.Types
+namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types
 {
     public class BusinessException : Exception
     {

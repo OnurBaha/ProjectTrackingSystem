@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.CrossCuttingConcerns.Exceptions.Handlers;
+using Core.Exceptions.Handlers;
 using Microsoft.AspNetCore.Http;
 using Serilog;
 

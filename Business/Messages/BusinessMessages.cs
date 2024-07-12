@@ -10,6 +10,6 @@ namespace Business.Messages
     {
         public static string UserNotFound = "Kullanıcı bulunamadı.";
         public static string DataNotFound = "Veri bulunamadı.";
-        public static string DataAvailable = "Bu veri kullanılmaktadır.";
+        public static string DataAvailable = "Bu mail daha önce oluşturulmuştur.";
     }
 }

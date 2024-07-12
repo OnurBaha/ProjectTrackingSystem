@@ -1,4 +1,5 @@
 using Business;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
@@ -106,7 +107,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseRouting();
 app.UseCors("myPolicy");
 app.UseAuthorization();

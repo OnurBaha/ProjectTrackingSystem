@@ -1,46 +1,40 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions.Extensions;
+using Core.CrossCuttingConcerns.Exceptions.Handlers;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
-using Core.CrossCuttingConcerns.Exceptions.Types;
+using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidationException = Core.CrossCuttingConcerns.Exceptions.Types.ValidationException;
-using ValidationProblemDetails = Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.ValidationProblemDetails;
+using ValidationProblemDetails = Core.CrossCuttingConcerns.Validation.HttpProblemDetails.ValidationProblemDetails;
 
-namespace Core.CrossCuttingConcerns.Exceptions.Handlers
+
+namespace Core.Exceptions.Handlers;
+public class HttpExceptionHandler : ExceptionHandler
 {
-    public class HttpExceptionHandler : ExceptionHandler
+    private HttpResponse? _response;
+    public HttpResponse Response
     {
-        private HttpResponse? _response;
-        public HttpResponse Response
-        {
-            get => _response ?? throw new ArgumentNullException(nameof(_response));
-            set => _response = value;
-        }
-        protected override Task HandleException(BusinessException businessException)
-        {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            string details = new BusinessProblemDetails(businessException.Message).AsJson();
-            return Response.WriteAsync(details);
-        }
+        get => _response ?? throw new ArgumentNullException(nameof(_response));
+        set => _response = value;
+    }
 
-        protected override Task HandleException(Exception exception)
-        {
-            Response.StatusCode = StatusCodes.Status500InternalServerError;
-            string details = new InternalServerErrorProblemDetails(exception.Message).AsJson();
-            return Response.WriteAsync(details);
-        }
+    protected override Task HandleException(BusinessException businessException)
+    {
+        Response.StatusCode = StatusCodes.Status400BadRequest;
+        string details = new BusinessProblemDetails(businessException.Message).AsJson();
+        return Response.WriteAsync(details);
+    }
 
-        protected override Task HandleException(ValidationException validationException)
-        {
-            Response.StatusCode = StatusCodes.Status400BadRequest;
-            string details = new ValidationProblemDetails(validationException.Errors).AsJson();
-            return Response.WriteAsync(details);
-        }
+    protected override Task HandleException(ValidationException validationException)
+    {
+        Response.StatusCode = StatusCodes.Status400BadRequest;
+        string details = new ValidationProblemDetails(validationException.Errors).AsJson();
+        return Response.WriteAsync(details);
+    }
+   
+
+    protected override Task HandleException(Exception exception)
+    {
+        Response.StatusCode = StatusCodes.Status500InternalServerError;
+        string details = new InternalServerErrorProblemDetails(exception.Message).AsJson();
+        return Response.WriteAsync(details);
     }
 }

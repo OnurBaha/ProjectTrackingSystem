@@ -1,4 +1,4 @@
-﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+﻿using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 using System.Text;
 
 namespace Core.Utilities.Security.Hashing;

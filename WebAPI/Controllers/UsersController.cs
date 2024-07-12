@@ -1,6 +1,9 @@
 ﻿using Business.Abstracts;
 using Business.Dto.Request.User;
 using Business.Rules.ValidationRules.FluentValidation.UserValidators;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +21,10 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
+
+        [Logging(typeof(MsSqlLogger))]
+        [Logging(typeof(FileLogger))]
+        [CacheRemove("Users.Get")]
         [ValidateModel(typeof(CreateUserRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> Add([FromBody] CreateUserRequest createUserRequest)

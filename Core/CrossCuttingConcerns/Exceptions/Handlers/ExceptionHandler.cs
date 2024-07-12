@@ -1,11 +1,11 @@
-﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+﻿using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValidationException = Core.CrossCuttingConcerns.Exceptions.Types.ValidationException;
+using ValidationException = Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types.ValidationException;
 
 namespace Core.CrossCuttingConcerns.Exceptions.Handlers
 {
