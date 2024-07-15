@@ -5,6 +5,7 @@ using Business.Dto.Response.Assignment;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +34,9 @@ namespace Business.Concretes
             return createdAssignmentResponse;
         }
 
-        public async Task<DeletedAssignmentResponse> Delete(DeleteAssignmentRequest deleteAssignmentRequest)
+        public async Task<DeletedAssignmentResponse> Delete(Guid id)
         {
-            var data = await _assignmentDal.GetAsync(i => i.Id == deleteAssignmentRequest.Id);
-            _mapper.Map(deleteAssignmentRequest, data);
+            var data = await _assignmentDal.GetAsync(i => i.Id == id);
             var result = await _assignmentDal.DeleteAsync(data);
             var result2 = _mapper.Map<DeletedAssignmentResponse>(result);
             return result2;
@@ -50,11 +50,24 @@ namespace Business.Concretes
             return createdAssignmentResponse;
         }
 
+        public async Task<IPaginate<GetListAssignmentResponse>> GetByProjectId(Guid projectId,PageRequest pageRequest)
+        {
+            var data = await _assignmentDal.GetListAsync(
+                  index: pageRequest.PageIndex,
+                  size: pageRequest.PageSize,
+                  predicate:a=>a.ProjectId == projectId,
+                  include:a=>a.Include(a=>a.Project)
+              );
+            var result = _mapper.Map<Paginate<GetListAssignmentResponse>>(data);
+            return result;
+        }
+
         public async Task<IPaginate<GetListAssignmentResponse>> GetListAsync(PageRequest pageRequest)
         {
             var data = await _assignmentDal.GetListAsync(
                 index: pageRequest.PageIndex,
-                size: pageRequest.PageSize
+                size: pageRequest.PageSize,
+                include: a => a.Include(a => a.Project)
             );
             var result = _mapper.Map<Paginate<GetListAssignmentResponse>>(data);
             return result;

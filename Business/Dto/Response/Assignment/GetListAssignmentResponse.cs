@@ -10,6 +10,7 @@ namespace Business.Dto.Response.Assignment
     {
         public Guid Id { get; set; }
         public Guid ProjectId { get; set; }
+        public string ProjectName { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }

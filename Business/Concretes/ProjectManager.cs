@@ -1,18 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dto.Request.Project;
-using Business.Dto.Request.Project;
-using Business.Dto.Request.Project;
-using Business.Dto.Request.Project;
-using Business.Dto.Response.Project;
-using Business.Dto.Response.Project;
-using Business.Dto.Response.Project;
-using Business.Dto.Response.Project;
-using Business.Dto.Response.Project;
 using Business.Dto.Response.Project;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -42,11 +33,10 @@ namespace Business.Concretes
         }
 
 
-        public async Task<DeletedProjectResponse> Delete(DeleteProjectRequest deleteProjectRequest)
+        public async Task<DeletedProjectResponse> Delete(Guid id)
         {
-            var data = await _projectDal.GetAsync(i => i.Id == deleteProjectRequest.Id);
-            _mapper.Map(deleteProjectRequest, data);
-            var result = await _projectDal.DeleteAsync(data);
+            Project deletedProject = await _projectDal.GetAsync(i => i.Id == id);
+            var result = await _projectDal.DeleteAsync(deletedProject);
             var result2 = _mapper.Map<DeletedProjectResponse>(result);
             return result2;
         }

@@ -17,21 +17,21 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpPost("Add")]
+        [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateProjectRequest createProjectRequest)
         {
             var result = await _projectService.Add(createProjectRequest);
             return Ok(result);
         }
 
-        [HttpDelete("Delete")]
-        public async Task<IActionResult> Delete([FromQuery] DeleteProjectRequest deleteProjectRequest)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery] Guid id)
         {
-            var result = await _projectService.Delete(deleteProjectRequest);
+            var result = await _projectService.Delete(id);
             return Ok(result);
         }
 
-        [HttpPut("Update")]
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateProjectRequest updateProjectRequest)
         {
             var result = await _projectService.Update(updateProjectRequest);

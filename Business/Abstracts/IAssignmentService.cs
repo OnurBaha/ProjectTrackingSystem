@@ -14,7 +14,10 @@ namespace Business.Abstracts
         Task<IPaginate<GetListAssignmentResponse>> GetListAsync(PageRequest pageRequest);
         Task<CreatedAssignmentResponse> Add(CreateAssignmentRequest createAssignmentRequest);
         Task<UpdatedAssignmentResponse> Update(UpdateAssignmentRequest updateAssignmentRequest);
-        Task<DeletedAssignmentResponse> Delete(DeleteAssignmentRequest deleteAssignmentRequest);
+        Task<DeletedAssignmentResponse> Delete(Guid id);
         Task<CreatedAssignmentResponse> GetById(Guid id);
+        Task<IPaginate<GetListAssignmentResponse>> GetByProjectId(Guid projectId, PageRequest pageRequest);
+
+
     }
 }
